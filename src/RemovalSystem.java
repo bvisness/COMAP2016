@@ -6,12 +6,12 @@
  */
 public class RemovalSystem {
 
-	public int costUpFront;
-	public int costPerDeployment;
-	public int costOfOperation;
+	public double costUpFront;
+	public double costPerDeployment;
+	public double costOfOperation;
 
-	public int costOfFailureOneTime;
-	public int costOfFailurePerDeployment;
+	public double costOfFailureOneTime;
+	public double costOfFailurePerDeployment;
 
 	public double riskOfFailureOneTime;
 	public double riskOfFailurePerDeployment;

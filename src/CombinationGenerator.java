@@ -4,20 +4,20 @@ public class CombinationGenerator {
 	public enum vehicleSize{small, large};
 	public enum deorbitMethod{laser, tether, net};
 	
-	private double numSmallVehicles = 16;
+	private int numSmallVehicles = 16;
 	
-	public double[] getObject(deploymentType a, vehicleSize b, deorbitMethod c){
-		// maxDeploys, takeDownsPerDeploy, upfront, onetimeRisk, onetimeCost, costPerDeployment, operationalCost, repetitiveRisk, repetitiveCost
-		double maxDeploys = getMaxDeploys(a);
-		double takeDownsPerDeploy = getTakeDownRate(b, c);
-		double upfrontCost = getUpFrontCost(a,b,c);
-		double onetimeRisk = getInitialRisk(a, b, c);
-		double onetimeFailureCost = getInitialFailureCost(a);
-		double costPerDeployment = getCostPerDeployment(a, b, c);
-		double operationalCost = getYearlyOperationalCost(a);
-		double repetitiveRisk = getRepeatingRisk(a);
-		double repetitiveFailureCost = getRepeatingFailureCost(a);
-		return new double[]{maxDeploys, takeDownsPerDeploy, upfrontCost, onetimeRisk, onetimeFailureCost, costPerDeployment, operationalCost, repetitiveRisk, repetitiveFailureCost};
+	public RemovalSystem getObject(deploymentType a, vehicleSize b, deorbitMethod c){
+		RemovalSystem system = new RemovalSystem();
+		system.maxDeploymentsPerYear = getMaxDeploys(a);
+		system.debrisPerDeployment = getTakeDownRate(b, c);
+		system.costUpFront = getUpFrontCost(a,b,c);
+		system.riskOfFailureOneTime = getInitialRisk(a, b, c);
+		system.costOfFailureOneTime = getInitialFailureCost(a);
+		system.costPerDeployment = getCostPerDeployment(a, b, c);
+		system.costOfOperation = getYearlyOperationalCost(a);
+		system.riskOfFailurePerDeployment = getRepeatingRisk(a);
+		system.costOfFailurePerDeployment = getRepeatingFailureCost(a);
+		return system;
 	}
 
 	private double getMaxDeploys(deploymentType a){
@@ -33,9 +33,9 @@ public class CombinationGenerator {
 		return 0;
 	}
 	
-	private double getTakeDownRate(vehicleSize b, deorbitMethod c){
+	private int getTakeDownRate(vehicleSize b, deorbitMethod c){
 		//TODO: update these numbers
-		double multiplier = 0;
+		int multiplier = 0;
 		switch(b){
 			case small:{
 				multiplier = numSmallVehicles;

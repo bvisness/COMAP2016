@@ -2,26 +2,18 @@
 public class TestDriver {
 	
 	public static void main(String[] args) {
-		RemovalSystem a = new RemovalSystem();
-		a.costUpFront = 1000;
-		a.costPerDeployment = 100;
-		a.costOfOperation = 50;
-		a.costOfFailureOneTime = 5000;
-		a.costOfFailurePerDeployment = 500;
-		a.riskOfFailureOneTime = 0.1;
-		a.riskOfFailurePerDeployment = 0.01;
-		a.debrisPerDeployment = 2;
-		a.maxDeploymentsPerYear = 4;
+		CombinationGenerator generator = new CombinationGenerator();
 		
-		RemovalSystem b = new RemovalSystem();
-		b.costUpFront = 800;
-		b.costPerDeployment = 150;
-		b.costOfOperation = 70;
-		b.costOfFailureOneTime = 3000;
-		b.costOfFailurePerDeployment = 750;
-		// risks
-		b.debrisPerDeployment = 1;
-		b.maxDeploymentsPerYear = 6;
+		RemovalSystem a = generator.getObject(
+			CombinationGenerator.deploymentType.rocket,
+			CombinationGenerator.vehicleSize.large,
+			CombinationGenerator.deorbitMethod.tether
+		);
+		RemovalSystem b = generator.getObject(
+			CombinationGenerator.deploymentType.skyhook,
+			CombinationGenerator.vehicleSize.small,
+			CombinationGenerator.deorbitMethod.laser
+		);
 		
 		RemovalSystem[] systems = {a, b};
 		
