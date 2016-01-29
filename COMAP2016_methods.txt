@@ -1,0 +1,16 @@
+Methods to destroy satellite sorted by category:
+
+Alter junk's velocity
+	Catch up to the satellite, attach to it, and thrust in opposite direction
+	Catch up to it and push against it with thrusters (use it as a launchpad basically?)
+	
+	
+Alter junk's trajectory
+	Get above it and push downward so that it's flying at Earth instead of around it
+________________________________________________________________________________________________________
+Ways to do it:
+
+Launch a responsive satellite or manned vehicle up to the junk to do something to it
+	Send it up on a sub-orbital path so that it only does one sweep to deal junk before coming back down
+	Send it up on an orbital path to keep it up there and then move it around to deal with junk
+________________________________________________________________________________________________________
