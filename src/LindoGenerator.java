@@ -7,16 +7,26 @@ public class LindoGenerator {
 	public String generateLindoCode(RemovalSystem[] systems, int years, double minDebris) {
 		String result = "";
 		
+		// Objective function
 		result += "MIN " + objectiveFunction(systems, years) + "\n";
 		result += "ST\n";
 		
+		// Minimum debris constraint
 		result += minDebrisConstraint(systems, minDebris) + "\n";
+		
+		// Max deployments per year constraints
 		for (int i = 0; i < systems.length; i++) {
 			result += maxDeploymentsConstraint(systems[i], i + 1) + "\n";
 		}
 		
+		// Binary restriction on using variables
+		for (int i = 0; i < systems.length; i++) {
+			result += USING_VAR + (i + 1) + " <= 1\n";
+		}
+		
 		result += "END\n";
 		
+		// Make using variables be ints
 		for (int i = 0; i < systems.length; i++) {
 			result += "INT " + USING_VAR + (i + 1) + "\n";
 		}
