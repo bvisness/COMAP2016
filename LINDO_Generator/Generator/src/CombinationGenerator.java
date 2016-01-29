@@ -4,14 +4,22 @@ public class CombinationGenerator {
 	public enum vehicleSize{small, large};
 	public enum deorbitMethod{laser, tether, net};
 	
-	public double[] getParameters(deploymentType a, vehicleSize b, deorbitMethod c){
+	private double numSmallVehicles = 16;
+	
+	public double[] getObject(deploymentType a, vehicleSize b, deorbitMethod c){
 		// maxDeploys, takeDownsPerDeploy, upfront, onetimeRisk, onetimeCost, costPerDeployment, operationalCost, repetitiveRisk, repetitiveCost
 		double maxDeploys = getMaxDeploys(a);
 		double takeDownsPerDeploy = getTakeDownRate(b, c);
 		double upfrontCost = getUpFrontCost(a,b,c);
-		return new double[]{maxDeploys, takeDownsPerDeploy, upfrontCost};
+		double onetimeRisk = getInitialRisk(a, b, c);
+		double onetimeFailureCost = getInitialFailureCost(a);
+		double costPerDeployment = getCostPerDeployment(a, b, c);
+		double operationalCost = getYearlyOperationalCost(a);
+		double repetitiveRisk = getRepeatingRisk(a);
+		double repetitiveFailureCost = getRepeatingFailureCost(a);
+		return new double[]{maxDeploys, takeDownsPerDeploy, upfrontCost, onetimeRisk, onetimeFailureCost, costPerDeployment, operationalCost, repetitiveRisk, repetitiveFailureCost};
 	}
-	
+
 	private double getMaxDeploys(deploymentType a){
 		//TODO: update these numbers
 		switch(a){
@@ -30,7 +38,7 @@ public class CombinationGenerator {
 		double multiplier = 0;
 		switch(b){
 			case small:{
-				multiplier = 16;
+				multiplier = numSmallVehicles;
 				break;
 			}
 			case large:{
@@ -60,10 +68,10 @@ public class CombinationGenerator {
 		//TODO: update these numbers
 		switch(a){
 			case rocket:{
-				return 4;
+				return 5000000;
 			}
 			case skyhook:{
-				return 16;
+				return 300000000;
 			}
 		}
 		return 0;
@@ -74,7 +82,7 @@ public class CombinationGenerator {
 		double multiplier = 0;
 		switch(b){
 			case small:{
-				multiplier = 16;
+				multiplier = numSmallVehicles;
 				break;
 			}
 			case large:{
@@ -95,5 +103,101 @@ public class CombinationGenerator {
 		}
 		return 0;
 	}
+	
+	private double getInitialRisk(deploymentType a, vehicleSize b, deorbitMethod c) {
+		// TODO Auto-generated method stub
+		double totalRisk = 0;
+		switch(b){
+			case small:{
+				totalRisk += 1.0/16.0;
+				break;
+			}
+			case large:{
+				totalRisk += .1;
+				break;
+			}
+		}
+		switch(c){
+			case laser:{
+				totalRisk += .15;
+				break;
+			}
+			case tether:{
+				totalRisk += .05;
+				break;
+			}
+			case net:{
+				totalRisk += .1;
+				break;
+			}
+		}
+		return totalRisk;
+		}
+	
+	private double getInitialFailureCost(deploymentType a) {
+		//TODO: update these numbers
+		return deployerBuildCost(a);
+	}
 
+	private double getCostPerDeployment(deploymentType a, vehicleSize b, deorbitMethod c) {
+		double totalCost = 0;
+		switch(a){
+			case rocket:{
+				totalCost += 300000;
+				break;
+			}
+			case skyhook:{
+				totalCost += 50000;
+				break;
+			}
+		}
+		switch(b){
+			case small:{
+				totalCost += numSmallVehicles*30000;
+				break;
+			}
+			case large:{
+				totalCost += 500000;
+				break;
+			}
+		}
+		return totalCost;
+	}
+
+	private double getYearlyOperationalCost(deploymentType a) {
+		switch(a){
+			case rocket:{
+				return 100000;
+			}
+			case skyhook:{
+				return 50000;
+			}
+		}
+		return 0;
+	}
+
+	private double getRepeatingRisk(deploymentType a) {
+		switch(a){
+			case rocket:{
+				return .06;
+			}
+			case skyhook:{
+				return .04;
+			}
+		}
+		return 0;
+	}
+	
+	private double getRepeatingFailureCost(deploymentType a) {
+		switch(a){
+			case rocket:{
+				return 300000;
+			}
+			case skyhook:{
+				return 50000;
+			}
+		}
+		return 0;
+	}
+	
 }
