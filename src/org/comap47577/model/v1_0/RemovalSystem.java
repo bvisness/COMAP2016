@@ -1,3 +1,4 @@
+package org.comap47577.model.v1_0;
 
 /**
  * This class describes a debris removal system. It is intended to function as a
