@@ -1,0 +1,12 @@
+public class config {
+	private String userName = "";
+	private String password = "";
+	
+	public String getUsername(){
+		return userName;
+	}
+	
+	public String getPassword(){
+		return password;
+	}
+}

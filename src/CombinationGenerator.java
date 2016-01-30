@@ -2,7 +2,7 @@
 public class CombinationGenerator {
 	public enum deploymentType{rocket, skyhook};
 	public enum vehicleSize{small, large};
-	public enum deorbitMethod{laser, tether, net};
+	public enum deorbitMethod{laser, tether, net, gas};
 	
 	private int numSmallVehicles = 16;
 	
