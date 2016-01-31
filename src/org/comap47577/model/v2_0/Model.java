@@ -1,9 +1,11 @@
 package org.comap47577.model.v2_0;
 
+import java.util.ArrayList;
+
 public class Model {
 	
-	private RemovalSystem[] systems;
-	private final boolean debug;
+	public final RemovalSystem[] systems;
+	public final boolean debug;
 	
 	public final int numSystems;
 	public final double minDebrisPerYear;
@@ -187,6 +189,43 @@ public class Model {
 			System.out.println("realcat_cost: " + result);
 		}
 		
+		return result;
+	}
+	
+	public double totalRevenue(ArrayList<Double> dValues) {
+		return totalRevenue(unboxArrayListDouble(dValues));
+	}
+	
+	public double totalRevenue(double[] dValues) {
+		double totalDebris = 0;
+		for (int i = 0; i < dValues.length; i++) {
+			double debrisCoefficientD = debrisFunctionCoefficientD(systems[i]);
+			totalDebris += debrisCoefficientD * dValues[i];
+		}
+		
+		return revenuePerDebris * totalDebris;
+	}
+	
+	public double totalCost(ArrayList<Double> dValues, ArrayList<Double> uValues) {
+		return totalCost(unboxArrayListDouble(dValues), unboxArrayListDouble(uValues));
+	}
+	
+	public double totalCost(double[] dValues, double[] uValues) {
+		double totalCost = 0;
+		for (int i = 0; i < uValues.length; i++) {
+			double costCoefficientD = costFunctionCoefficientD(systems[i]);
+			double costCoefficientU = costFunctionCoefficientU(systems[i]);
+			totalCost += costCoefficientU * uValues[i] + costCoefficientD * dValues[i];
+		}
+		
+		return totalCost;
+	}
+	
+	private double[] unboxArrayListDouble(ArrayList<Double> array) {
+		double[] result = new double[array.size()];
+		for (int i = 0; i < result.length; i++) {
+			result[i] = array.get(i).doubleValue();
+		}
 		return result;
 	}
 

@@ -35,11 +35,14 @@ public class TestDriver {
 		
 		RemovalSystem[] systems = {a, b};
 		
-		Model model = new Model(systems, 5, 30, 50, true);
+		Model model = new Model(systems, 5, 30, 10);
 		LindoGenerator lindo = new LindoGenerator();
 		String lindoCode = lindo.generateLindoCode(model);
 		
 		System.out.println(lindoCode);
+		
+		LingoParser parser = new LingoParser();
+		parser.parseLingo(model);
 	}
 
 }
