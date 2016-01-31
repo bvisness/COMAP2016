@@ -73,7 +73,7 @@ public class LindoGenerator {
 			}
 			result += (numberString(debrisCoefficientsD[i]) + DEPLOYMENTS_VAR + (i + 1));
 		}
-		result += " >= " + numberString(model.minDebrisPerYear);
+		result += " >= " + numberString(model.minDebrisPerYear * model.years);
 		return result;
 	}
 	

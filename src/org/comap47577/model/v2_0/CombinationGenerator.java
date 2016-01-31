@@ -19,8 +19,8 @@ public class CombinationGenerator {
 		system.costOfOperation = getYearlyOperationalCost(a);
 		system.riskOfFailurePerDeployment = getRepeatingRisk(a);
 		system.costOfFailurePerDeployment = getRepeatingFailureCost(a);
-		system.riskOfCatastrophicFailurePerDeployment = 0.05;
-		system.costOfCatastrophicFailurePerDeployment = 1;
+		system.riskOfCatastrophicFailurePerDeployment = getRepeatingCatastrophicRisk(a);
+		system.costOfCatastrophicFailurePerDeployment = getRepeatingCatastrophicFailureCost(a);
 		return system;
 	}
 
@@ -117,7 +117,7 @@ public class CombinationGenerator {
 				break;
 			}
 			case large:{
-				totalRisk += .1;
+				totalRisk += .03;
 				break;
 			}
 		}
@@ -199,6 +199,30 @@ public class CombinationGenerator {
 			}
 			case skyhook:{
 				return 0.05;
+			}
+		}
+		return 0;
+	}
+	
+	private double getRepeatingCatastrophicRisk(deploymentType a) {
+		switch(a) {
+			case rocket: {
+				return 0;
+			}
+			case skyhook: {
+				return 0.005;
+			}
+		}
+		return 0;
+	}
+	
+	private double getRepeatingCatastrophicFailureCost(deploymentType a) {
+		switch(a){
+			case rocket:{
+				return 0;
+			}
+			case skyhook:{
+				return 1;
 			}
 		}
 		return 0;
