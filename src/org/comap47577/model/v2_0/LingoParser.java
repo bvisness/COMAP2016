@@ -32,7 +32,7 @@ public class LingoParser {
 		return input;
 	}
 	
-	public void parseLingo(Model model) {
+	public void parseLingo(Model model, boolean concise) {
 		String input = getLingo();
 		
 		Pattern objValuePattern = Pattern.compile("Objective value: +(-?[0-9]+[.][0-9]+)");
@@ -79,6 +79,14 @@ public class LingoParser {
 		// Now the fun begins
 		// ---------------------------------------------------
 		
+		if (concise) {
+			processValuesConcise(model, objValue, dValues, uValues);
+		} else {
+			processValues(model, objValue, dValues, uValues);
+		}
+	}
+	
+	private void processValues(Model model, double objValue, ArrayList<Double> dValues, ArrayList<Double> uValues) {
 		{
 			System.out.print("Systems in use: ");
 			boolean addComma = false;
@@ -130,6 +138,42 @@ public class LingoParser {
 		System.out.println(" - Total revenue: " + totalRevenue + " million");
 		System.out.println(" - Total cost: " + totalCost + " million");
 		System.out.println(" - Difference: " + (totalRevenue - totalCost) + " million");
+	}
+	
+	private void processValuesConcise(Model model, double objValue, ArrayList<Double> dValues, ArrayList<Double> uValues) {
+		double totalDebrisPerYear = 0;
+		double totalDebrisOverall = 0;
+		{
+			for (int i = 0; i < uValues.size(); i++) {
+				if (uValues.get(i) == 0) {
+					break;
+				}
+				
+				RemovalSystem system = model.systems[i];
+				double debrisPerYear = dValues.get(i) * system.debrisPerDeployment;
+				double debrisOverall = debrisPerYear * model.years;
+				
+				System.out.println(dValues.get(i));
+				System.out.println(debrisPerYear);
+				System.out.println(debrisOverall);
+				
+				totalDebrisPerYear += debrisPerYear;
+				totalDebrisOverall += debrisOverall;
+			}
+		}
+		
+		double requiredDebris = model.minDebrisPerYear * model.years;
+		System.out.println(totalDebrisPerYear);
+		System.out.println(totalDebrisPerYear - model.minDebrisPerYear);
+		System.out.println(totalDebrisOverall);
+		System.out.println(totalDebrisOverall - requiredDebris);
+		
+		double totalRevenue = model.totalRevenue(dValues);
+		double totalCost = model.totalCost(dValues, uValues);
+		System.out.println(objValue);
+		System.out.println(totalRevenue);
+		System.out.println(totalCost);
+		System.out.println(totalRevenue - totalCost);
 	}
 
 }

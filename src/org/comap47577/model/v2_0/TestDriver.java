@@ -7,6 +7,8 @@ public class TestDriver {
 		RemovalSystem a = new ExpendableRocket(new LargeSatellite(new Tether())).getObject();
 		RemovalSystem b = new CleanSpaceOne(new MediumSatellite(new Net())).getObject();
 		RemovalSystem c = new Skyhook(new SmallSatellite(new Net())).getObject();
+		RemovalSystem d = new CleanSpaceOne(new MediumSatellite(new Tether())).getObject();
+		RemovalSystem e = new Skyhook(new SmallSatellite(new Tether())).getObject();
 		
 //		a.debrisPerDeployment = 4;
 //		a.maxDeploymentsPerYear = 5;
@@ -25,7 +27,7 @@ public class TestDriver {
 		test.debrisPerDeployment = 1;
 		test.maxDeploymentsPerYear = 4;
 		
-		RemovalSystem[] systems = {a, b, c};
+		RemovalSystem[] systems = {a, b, c, d, e};
 		
 		for (int years = 1; years <= 10; years++) {
 			System.out.println("\n=====================================\n");
@@ -36,7 +38,7 @@ public class TestDriver {
 			System.out.println(lindoCode);
 			
 			LingoParser parser = new LingoParser();
-			parser.parseLingo(model);
+			parser.parseLingo(model, false);
 		}
 	}
 
