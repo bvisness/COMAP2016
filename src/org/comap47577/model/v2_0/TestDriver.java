@@ -27,14 +27,17 @@ public class TestDriver {
 		
 		RemovalSystem[] systems = {a, b, c};
 		
-		Model model = new Model(systems, 5, 30, 5);
-		LindoGenerator lindo = new LindoGenerator();
-		String lindoCode = lindo.generateLindoCode(model);
-		
-		System.out.println(lindoCode);
-		
-		LingoParser parser = new LingoParser();
-		parser.parseLingo(model);
+		for (int years = 1; years <= 10; years++) {
+			System.out.println("\n=====================================\n");
+			
+			Model model = new Model(systems, 5, 50, years);
+			LindoGenerator lindo = new LindoGenerator();
+			String lindoCode = lindo.generateLindoCode(model);
+			System.out.println(lindoCode);
+			
+			LingoParser parser = new LingoParser();
+			parser.parseLingo(model);
+		}
 	}
 
 }

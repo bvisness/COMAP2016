@@ -7,17 +7,28 @@ import java.util.regex.Pattern;
 
 public class LingoParser {
 	
+	public static final String BREAK_WORD = "go";
+	
 	private String getLingo() {
 		Scanner in = new Scanner(System.in);
 		
-//		System.out.println("Paste your LINGO output below, then press ctrl-d:");
+		while (true) {
+			String line = in.nextLine();
+			if (line.indexOf(BREAK_WORD) > -1) {
+				break;
+			}
+		}
+		System.out.println("Paste your LINGO output below, then press ctrl-d:");
 		
 		String input = "";
-		while (in.hasNextLine()) {
-			input += in.nextLine() + "\n";
+		while (true) {
+			String line = in.nextLine();
+			if (line.indexOf(BREAK_WORD) > -1) {
+				break;
+			}
+			input += line + "\n";
 		}
 		
-		in.close();
 		return input;
 	}
 	
