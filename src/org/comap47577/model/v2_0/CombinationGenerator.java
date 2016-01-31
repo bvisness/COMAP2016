@@ -6,6 +6,7 @@ public class CombinationGenerator {
 	public enum deorbitMethod{laser, tether, net, gas};
 	
 	private int numSmallVehicles = 16;
+	//All costs are in terms of 1 = $1 million
 	
 	public RemovalSystem getObject(deploymentType a, vehicleSize b, deorbitMethod c){
 		RemovalSystem system = new RemovalSystem();
@@ -71,10 +72,10 @@ public class CombinationGenerator {
 		//TODO: update these numbers
 		switch(a){
 			case rocket:{
-				return 5000000;
+				return 50;
 			}
 			case skyhook:{
-				return 300000000;
+				return 18000;
 			}
 		}
 		return 0;
@@ -95,13 +96,13 @@ public class CombinationGenerator {
 		}
 		switch(c){
 			case laser:{
-				return multiplier*10000;
+				return multiplier*10;
 			}
 			case tether:{
-				return multiplier*6000;
+				return multiplier*6;
 			}
 			case net:{
-				return multiplier*7000;
+				return multiplier*7;
 			}
 		}
 		return 0;
@@ -146,21 +147,21 @@ public class CombinationGenerator {
 		double totalCost = 0;
 		switch(a){
 			case rocket:{
-				totalCost += 300000;
+				totalCost += 50;
 				break;
 			}
 			case skyhook:{
-				totalCost += 50000;
+				totalCost += .005;
 				break;
 			}
 		}
 		switch(b){
 			case small:{
-				totalCost += numSmallVehicles*30000;
+				totalCost += numSmallVehicles*0.03;
 				break;
 			}
 			case large:{
-				totalCost += 500000;
+				totalCost += 0.5;
 				break;
 			}
 		}
@@ -170,10 +171,10 @@ public class CombinationGenerator {
 	private double getYearlyOperationalCost(deploymentType a) {
 		switch(a){
 			case rocket:{
-				return 100000;
+				return 0.1;
 			}
 			case skyhook:{
-				return 50000;
+				return 0.05;
 			}
 		}
 		return 0;
@@ -194,10 +195,10 @@ public class CombinationGenerator {
 	private double getRepeatingFailureCost(deploymentType a) {
 		switch(a){
 			case rocket:{
-				return 300000;
+				return 0.3;
 			}
 			case skyhook:{
-				return 50000;
+				return 0.05;
 			}
 		}
 		return 0;
