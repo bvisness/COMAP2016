@@ -20,7 +20,7 @@ public class CombinationGenerator {
 		system.riskOfFailurePerDeployment = getRepeatingRisk(a);
 		system.costOfFailurePerDeployment = getRepeatingFailureCost(a);
 		system.riskOfCatastrophicFailurePerDeployment = 0.05;
-		system.costOfCatastrophicFailurePerDeployment = 1000000;
+		system.costOfCatastrophicFailurePerDeployment = 1;
 		return system;
 	}
 
