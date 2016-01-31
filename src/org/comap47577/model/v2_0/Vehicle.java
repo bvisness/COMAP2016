@@ -4,13 +4,13 @@ public abstract class Vehicle {
 	public double numVehicles;
 	public double costPerVehicle;
 	
-	public DeorbitMethod takeThemDown;
+	public DeorbitMethod deorbitMethod;
 	
 	public int getTakeDownRate(){
-		return (int) (numVehicles*takeThemDown.takeDownRate);
+		return (int) (numVehicles*deorbitMethod.takeDownRate);
 	}
 	
 	public double getCostPerVehicle(){
-		return numVehicles*(costPerVehicle + takeThemDown.buildCost);
+		return numVehicles*(costPerVehicle + deorbitMethod.buildCost);
 	}
 }

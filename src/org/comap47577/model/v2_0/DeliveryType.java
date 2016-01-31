@@ -54,7 +54,7 @@ public abstract class DeliveryType {
 	}
 	
 	private double getCostPerDeployment(){
-		return deploymentCost + payload.numVehicles*payload.getCostPerVehicle();
+		return deploymentCost + payload.numVehicles * payload.getCostPerVehicle();
 	}
 	
 	private double getYearlyOperationalCost(){
@@ -62,7 +62,7 @@ public abstract class DeliveryType {
 	}
 	
 	private double getRepeatingRisk(){
-		return repeatingRisk;
+		return repeatingRisk + payload.deorbitMethod.riskOfFailure * payload.numVehicles;
 	}
 	
 	private double getRepeatingFailureCost(){

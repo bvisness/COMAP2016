@@ -10,7 +10,7 @@ public class LingoParser {
 	private String getLingo() {
 		Scanner in = new Scanner(System.in);
 		
-		System.out.println("Paste your LINGO output below, then press ctrl-d:");
+//		System.out.println("Paste your LINGO output below, then press ctrl-d:");
 		
 		String input = "";
 		while (in.hasNextLine()) {

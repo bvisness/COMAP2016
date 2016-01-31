@@ -5,7 +5,8 @@ public class TestDriver {
 	public static void main(String[] args) {
 		
 		RemovalSystem a = new ExpendableRocket(new LargeSatellite(new Tether())).getObject();
-		RemovalSystem b = new Skyhook(new SmallSatellite(new Laser())).getObject();
+		RemovalSystem b = new CleanSpaceOne(new MediumSatellite(new Net())).getObject();
+		RemovalSystem c = new Skyhook(new SmallSatellite(new Net())).getObject();
 		
 //		a.debrisPerDeployment = 4;
 //		a.maxDeploymentsPerYear = 5;
@@ -24,9 +25,9 @@ public class TestDriver {
 		test.debrisPerDeployment = 1;
 		test.maxDeploymentsPerYear = 4;
 		
-		RemovalSystem[] systems = {a, b};
+		RemovalSystem[] systems = {a, b, c};
 		
-		Model model = new Model(systems, 5, 30, 10);
+		Model model = new Model(systems, 5, 30, 5);
 		LindoGenerator lindo = new LindoGenerator();
 		String lindoCode = lindo.generateLindoCode(model);
 		
