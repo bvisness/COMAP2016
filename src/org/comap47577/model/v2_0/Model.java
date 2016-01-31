@@ -3,6 +3,7 @@ package org.comap47577.model.v2_0;
 public class Model {
 	
 	private RemovalSystem[] systems;
+	private final boolean debug;
 	
 	public final int numSystems;
 	public final double minDebrisPerYear;
@@ -10,11 +11,16 @@ public class Model {
 	public final int years;
 	
 	public Model(RemovalSystem[] systems, double minDebrisPerYear, double revenuePerDebris, int years) {
+		this(systems, minDebrisPerYear, revenuePerDebris, years, false);
+	}
+	
+	public Model(RemovalSystem[] systems, double minDebrisPerYear, double revenuePerDebris, int years, boolean debug) {
 		this.systems = systems;
 		this.numSystems = systems.length;
 		this.minDebrisPerYear = minDebrisPerYear;
 		this.revenuePerDebris = revenuePerDebris;
 		this.years = years;
+		this.debug = debug;
 	}
 	
 	public double[] objectiveFunctionCoefficientsD() {
@@ -27,7 +33,7 @@ public class Model {
 		
 		// The cost part of the equation
 		for (int i = 0; i < coefficientsD.length; i++) {
-			coefficientsD[i] += debrisFunctionCoefficientD(systems[i]);
+			coefficientsD[i] -= costFunctionCoefficientD(systems[i]); // We subtract because, you know, cost
 		}
 		
 		return coefficientsD;
@@ -75,7 +81,14 @@ public class Model {
 	private double debrisFunctionCoefficientD(RemovalSystem system) {
 		double r = system.riskOfFailurePerDeployment;
 		double catAll = system.riskOfCatastrophicFailureOverall;
-		return system.debrisPerDeployment * (1 - r) * catslope(system) * (1 - catAll);
+		
+		double result = system.debrisPerDeployment * (1 - r) * catslope(system) * (1 - catAll);
+		
+		if (debug) {
+			System.out.println("Debris function coefficient for D: " + result);
+		}
+		
+		return result;
 	}
 	
 	/**
@@ -88,7 +101,14 @@ public class Model {
 		double r = system.riskOfFailurePerDeployment;
 		double fCat = system.costOfCatastrophicFailurePerDeployment;
 		double cat = system.riskOfCatastrophicFailurePerDeployment;
-		return years * (cd + fd * r + fCat * cat) * catslopeCost(system);
+		
+		double result = years * (cd + fd * r + fCat * cat) * catslopeCost(system);
+		
+		if (debug) {
+			System.out.println("Cost function coefficient for D: " + result);
+		}
+		
+		return result;
 	}
 	
 	/**
@@ -100,7 +120,14 @@ public class Model {
 		double fAll = system.costOfCatastrophicFailureOverall;
 		double catAll = system.riskOfCatastrophicFailureOverall;
 		double cop = system.costOfOperation;
-		return cu + fAll * catAll + cop * years;
+		
+		double result = cu + fAll * catAll + cop * years;
+		
+		if (debug) {
+			System.out.println("Cost function coefficient for U: " + result);
+		}
+		
+		return result;
 	}
 	
 	private double catslope(RemovalSystem system) {
@@ -110,13 +137,27 @@ public class Model {
 		
 		double run = system.maxDeploymentsPerYear * years;
 		double rise = realcat(system);
-		return rise / run;
+		
+		double result = rise / run;
+		
+		if (debug) {
+			System.out.println("catslope: " + result);
+		}
+		
+		return result;
 	}
 	
 	private double realcat(RemovalSystem system) {
 		double cat = system.riskOfCatastrophicFailurePerDeployment;
 		double dMax = system.maxDeploymentsPerYear;
-		return ((1 - cat) - Math.pow(1 - cat, dMax * years + 1)) / cat;
+		
+		double result = ((1 - cat) - Math.pow(1 - cat, dMax * years + 1)) / cat;
+		
+		if (debug) {
+			System.out.println("realcat: " + result);
+		}
+		
+		return result;
 	}
 	
 	private double catslopeCost(RemovalSystem system) {
@@ -126,13 +167,27 @@ public class Model {
 		
 		double run = system.maxDeploymentsPerYear * years;
 		double rise = realcatCost(system);
-		return rise / run;
+		
+		double result = rise / run;
+		
+		if (debug) {
+			System.out.println("catslope_cost: " + result);
+		}
+		
+		return result;
 	}
 	
 	private double realcatCost(RemovalSystem system) {
 		double cat = system.riskOfCatastrophicFailurePerDeployment;
 		double dMax = system.maxDeploymentsPerYear;
-		return (1 - Math.pow(1 - cat, dMax * years)) / cat;
+		
+		double result = (1 - Math.pow(1 - cat, dMax * years)) / cat;
+		
+		if (debug) {
+			System.out.println("realcat_cost: " + result);
+		}
+		
+		return result;
 	}
 
 }

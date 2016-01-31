@@ -50,13 +50,13 @@ public class LindoGenerator {
 			result += (numberString(coefficientsD[i]) + DEPLOYMENTS_VAR + (i + 1));
 		}
 		
-		result += " + ";
+		result += " - ";
 		
 		// Using variables
 		double[] coefficientsU = model.objectiveFunctionCoefficientsU();
 		for (int i = 0; i < model.numSystems; i++) {
 			if (i > 0) {
-				result += " + ";
+				result += " - ";
 			}
 			result += (numberString(coefficientsU[i]) + USING_VAR + (i + 1));
 		}

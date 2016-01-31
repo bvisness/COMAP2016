@@ -16,9 +16,22 @@ public class TestDriver {
 			CombinationGenerator.deorbitMethod.laser
 		);
 		
-		RemovalSystem[] systems = {a, b};
+		RemovalSystem test = new RemovalSystem();
+		test.costUpFront = 10;
+		test.costPerDeployment = 1;
+		test.costOfOperation = 2.5;
+		test.costOfCatastrophicFailureOverall = 100;
+		test.costOfFailurePerDeployment = 0.1;
+		test.costOfCatastrophicFailurePerDeployment = 1;
+		test.riskOfCatastrophicFailureOverall = 0.01;
+		test.riskOfFailurePerDeployment = 0.1;
+		test.riskOfCatastrophicFailurePerDeployment = 0.01;
+		test.debrisPerDeployment = 1;
+		test.maxDeploymentsPerYear = 4;
 		
-		Model model = new Model(systems, 5, 100000000, 10);
+		RemovalSystem[] systems = {test, test};
+		
+		Model model = new Model(systems, 5, 100, 4);
 		LindoGenerator lindo = new LindoGenerator();
 		String lindoCode = lindo.generateLindoCode(model);
 		
