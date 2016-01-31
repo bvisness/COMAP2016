@@ -14,6 +14,9 @@ public abstract class DeliveryType {
 	
 	protected Vehicle payload;
 	
+	// DeliveryType expRocket = new ExpendableRocket(new LargeSatellite(new Tether()));
+	// expRocket.getObject();
+	
 	public RemovalSystem getObject(){
 		RemovalSystem system = new RemovalSystem();
 		system.maxDeploymentsPerYear = getMaxDeploys();
