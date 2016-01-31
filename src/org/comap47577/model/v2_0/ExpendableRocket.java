@@ -6,10 +6,10 @@ public class ExpendableRocket extends DeliveryType{
 		super.buildCost = 0;
 		super.deploymentCost = 50;
 		super.yearlyCost = 2;
-		super.initialFailureRisk = 0.05;
-		super.initialFailureCost = 5;
-		super.catastrophicRisk = 0.01;
-		super.catastrophicCost = 2;
+		super.initialFailureRisk = 0;
+		super.initialFailureCost = 0;
+		super.catastrophicRisk = 0;
+		super.catastrophicCost = 0;
 		super.repeatingRisk = 0.01;
 		super.repeatingCost = 1;
 		super.payload = typeOfPayload;
