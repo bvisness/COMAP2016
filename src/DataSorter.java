@@ -14,12 +14,11 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class DataSorter {
 	public static void main(String[] args) {
-		config credentials = new config();
 		try {
 			String baseURL = "https://www.space-track.org";
 			String authPath = "/auth/login";
-			String userName = credentials.getUsername();
-			String password = credentials.getPassword();
+			String userName = "BAD USERNAME";
+			String password = "BAD PASSWORD";
 			String query = "/basicspacedata/query/class/satcat/OBJECT_TYPE/DEBRIS/orderby/RCS_SIZE asc/metadata/false";
 			
 			CookieManager manager = new CookieManager();
