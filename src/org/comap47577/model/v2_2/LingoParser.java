@@ -32,10 +32,10 @@ public class LingoParser {
 		Pattern objValuePattern = Pattern.compile("Objective value: +(-?[0-9]+[.][0-9]+)");
 		Matcher objValueMatcher = objValuePattern.matcher(input);
 		
-		Pattern dPattern = Pattern.compile("D([0-9]+) +(-?[0-9]+[.][0-9]+) +(-?[0-9]+[.][0-9]+)");
+		Pattern dPattern = Pattern.compile("D([0-9]+) +(-?[0-9]*[.][0-9]*) +(-?[0-9]*[.][0-9]*)");
 		Matcher dMatcher = dPattern.matcher(input);
 		
-		Pattern uPattern = Pattern.compile("U([0-9]+) +(-?[0-9]+[.][0-9]+) +(-?[0-9]+[.][0-9]+)");
+		Pattern uPattern = Pattern.compile("U([0-9]+) +(-?[0-9]*[.][0-9]*) +(-?[0-9]*[.][0-9]*)");
 		Matcher uMatcher = uPattern.matcher(input);
 		
 		if (!objValueMatcher.find()) {
@@ -140,8 +140,8 @@ public class LingoParser {
 		{
 			for (int i = 0; i < uValues.size(); i++) {
 				RemovalSystem system = model.systems[i];
-				double debrisPerYear = dValues.get(i) * model.debrisFunctionCoefficientD(system);
-				double debrisOverall = debrisPerYear * model.years;
+				double debrisOverall = dValues.get(i) * model.debrisFunctionCoefficientD(system);
+				double debrisPerYear = debrisOverall / model.years;
 				
 				System.out.println(dValues.get(i));
 				System.out.println(debrisPerYear);
