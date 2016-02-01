@@ -29,7 +29,7 @@ public class Model {
 	
 	/**
 	 * Gets the coefficient of the given system's D variable in the debris
-	 * function. Units of the coefficient: debris / deployment.
+	 * function. Units of the coefficient: debris / (deployments / year).
 	 */
 	public double debrisFunctionCoefficientD(RemovalSystem system) {
 		double result = approxDebrisFunctionSlope(system);
@@ -43,7 +43,7 @@ public class Model {
 	
 	/**
 	 * Gets the coefficient of the given system's D variable in the cost
-	 * function. Units of the coefficient: cost / deployment.
+	 * function. Units of the coefficient: cost / (deployments / year).
 	 */
 	public double costFunctionCoefficientD(RemovalSystem system) {
 		double result = approxCostFunctionSlopeD(system);
@@ -158,6 +158,9 @@ public class Model {
 	// Private Methods
 	// ====================================================
 	
+	/**
+	 * Units: debris / (deployments / year)
+	 */
 	private double approxDebrisFunctionSlope(RemovalSystem system) {
 		double run = system.maxDeploymentsPerYear;
 		double rise = actualDebrisFunction(system, system.maxDeploymentsPerYear);
@@ -165,6 +168,9 @@ public class Model {
 		return rise / run;
 	}
 	
+	/**
+	 * Units: cost / (deployments / year)
+	 */
 	private double approxCostFunctionSlopeD(RemovalSystem system) {
 		double run = system.maxDeploymentsPerYear;
 		double rise = actualCostFunctionD(system, system.maxDeploymentsPerYear);
@@ -172,6 +178,9 @@ public class Model {
 		return rise / run;
 	}
 	
+	/**
+	 * Units: debris
+	 */
 	private double actualDebrisFunction(RemovalSystem system, double deploymentsPerYear) {
 		double r = system.riskOfFailurePerDeployment;
 		double cat = system.riskOfCatastrophicFailurePerDeployment;
@@ -180,7 +189,7 @@ public class Model {
 		
 		double cumulativeCat;
 		if (cat == 0) {
-			cumulativeCat = 1;
+			cumulativeCat = deploymentsPerYear * years;
 		} else {
 			cumulativeCat = (1 - cat) * ((1 - Math.pow(1 - cat, deploymentsPerYear * years)) / cat);
 		}
@@ -188,6 +197,9 @@ public class Model {
 		return debPerDep * (1 - r) * cumulativeCat * (1 - catAll);
 	}
 	
+	/**
+	 * Units: cost
+	 */
 	private double actualCostFunctionD(RemovalSystem system, double deploymentsPerYear) {
 		double cd = system.costPerDeployment;
 		double fd = system.costOfFailurePerDeployment;
