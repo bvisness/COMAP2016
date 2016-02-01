@@ -4,10 +4,27 @@ public class TestDriver {
 	
 	public static void main(String[] args) {
 		
-		RemovalSystem a = new ExpendableRocket(new LargeSatellite(new Tether())).getObject();
+		RemovalSystem[] systems = {
+				new ExpendableRocket(new LargeSatellite(new Net())).getObject(),
+				new ExpendableRocket(new LargeSatellite(new Tether())).getObject(),
+				new ExpendableRocket(new MediumSatellite(new Net())).getObject(),
+				new ExpendableRocket(new MediumSatellite(new Tether())).getObject(),
+				new ExpendableRocket(new SmallSatellite(new Net())).getObject(),
+				new CleanSpaceOne(new LargeSatellite(new Net())).getObject(),
+				new CleanSpaceOne(new LargeSatellite(new Tether())).getObject(),
+				new CleanSpaceOne(new MediumSatellite(new Net())).getObject(),
+				new CleanSpaceOne(new MediumSatellite(new Tether())).getObject(),
+				new CleanSpaceOne(new SmallSatellite(new Net())).getObject(),
+				new Skyhook(new LargeSatellite(new Net())).getObject(),
+				new Skyhook(new LargeSatellite(new Tether())).getObject(),
+				new Skyhook(new MediumSatellite(new Net())).getObject(),
+				new Skyhook(new MediumSatellite(new Tether())).getObject(),
+				new Skyhook(new SmallSatellite(new Net())).getObject(),
+		};
+		
 		RemovalSystem b = new CleanSpaceOne(new MediumSatellite(new Net())).getObject();
 		RemovalSystem c = new Skyhook(new SmallSatellite(new Net())).getObject();
-		RemovalSystem d = new CleanSpaceOne(new MediumSatellite(new Tether())).getObject();
+		RemovalSystem d = new CleanSpaceOne(new LargeSatellite(new Tether())).getObject();
 		RemovalSystem e = new Skyhook(new SmallSatellite(new Tether())).getObject();
 		
 //		a.debrisPerDeployment = 4;
@@ -28,19 +45,19 @@ public class TestDriver {
 		test.maxDeploymentsPerYear = 8;
 		
 //		RemovalSystem[] systems = {a, b, c, d, e};
-		RemovalSystem[] systems = {test};
+//		RemovalSystem[] systems = {test};
 		
 		for (int years = 1; years <= 20; years++) {
 			System.out.println("\n=====================================\n");
 			System.out.println(years + " YEARS:\n");
 			
-			Model model = new Model(systems, 5, 18, 50, years, true);
+			Model model = new Model(systems, 5, 18, 20, years, false);
 			LindoGenerator lindo = new LindoGenerator();
 			String lindoCode = lindo.generateLindoCode(model);
 			System.out.println(lindoCode);
 			
 			LingoParser parser = new LingoParser();
-			parser.parseLingo(model, false);
+			parser.parseLingo(model, true);
 		}
 	}
 
